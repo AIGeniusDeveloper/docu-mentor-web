@@ -10,6 +10,7 @@ import { HistoryTable } from '@/components/ingestion/HistoryTable'
 import { Button } from '@/components/ui/Button'
 import { Rocket, CheckCircle, AlertCircle } from 'lucide-react'
 import { Document, Stats } from '@/types'
+import { useIngestionAPI } from '@/hooks/useIngestionAPI'
 
 const sampleStats: Stats = {
   totalDocuments: 247,
@@ -71,18 +72,7 @@ const sampleDocuments: Document[] = [
 
 export default function IngestionPage() {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([])
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [progress, setProgress] = useState(0)
-  const [showProgress, setShowProgress] = useState(false)
-  const [statusMessage, setStatusMessage] = useState<{
-    type: 'success' | 'error'
-    text: string
-    visible: boolean
-  }>({
-    type: 'success',
-    text: '',
-    visible: false
-  })
+  const { ingestionStatus, uploadDocuments, resetStatus } = useIngestionAPI()
 
   const handleFilesSelected = (files: File[]) => {
     setSelectedFiles(files)
@@ -92,42 +82,11 @@ export default function IngestionPage() {
     setSelectedFiles(prev => prev.filter((_, i) => i !== index))
   }
 
-  const showStatus = (type: 'success' | 'error', text: string) => {
-    setStatusMessage({ type, text, visible: true })
-    setTimeout(() => {
-      setStatusMessage(prev => ({ ...prev, visible: false }))
-    }, 8000)
-  }
-
   const handleIngestion = async () => {
     if (selectedFiles.length === 0) return
-
-    setIsProcessing(true)
-    setShowProgress(true)
-    setProgress(0)
-    setStatusMessage(prev => ({ ...prev, visible: false }))
-
-    // Simuler le processus d'ingestion
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        const increment = Math.random() * 8 + 2
-        const newProgress = Math.min(prev + increment, 100)
-        
-        if (newProgress >= 100) {
-          clearInterval(interval)
-          
-          setTimeout(() => {
-            setIsProcessing(false)
-            setShowProgress(false)
-            setProgress(0)
-            showStatus('success', `${selectedFiles.length} document(s) ingéré(s) avec succès dans la base de connaissances IA`)
-            setSelectedFiles([])
-          }, 1000)
-        }
-        
-        return newProgress
-      })
-    }, 300)
+    
+    await uploadDocuments(selectedFiles)
+    setSelectedFiles([])
   }
 
   return (
@@ -163,33 +122,33 @@ export default function IngestionPage() {
               
               <Button
                 onClick={handleIngestion}
-                disabled={selectedFiles.length === 0 || isProcessing}
-                isLoading={isProcessing}
+                disabled={selectedFiles.length === 0 || ingestionStatus.isProcessing}
+                isLoading={ingestionStatus.isProcessing}
                 className="w-full mt-8 py-4 text-lg"
               >
                 <Rocket className="w-5 h-5" />
-                {isProcessing ? 'Ingestion en cours...' : 'Lancer l\'Ingestion'}
+                {ingestionStatus.isProcessing ? 'Ingestion en cours...' : 'Lancer l\'Ingestion'}
               </Button>
               
               <ProgressBar 
-                progress={progress}
-                isVisible={showProgress}
+                progress={ingestionStatus.progress}
+                isVisible={ingestionStatus.showProgress}
                 className="mt-6"
               />
               
               {/* Message de statut */}
-              {statusMessage.visible && (
+              {ingestionStatus.statusMessage && (
                 <div className={`mt-6 p-4 rounded-xl flex items-center gap-3 font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
-                  statusMessage.type === 'success'
+                  ingestionStatus.isProcessing === false && ingestionStatus.statusMessage.includes('succès')
                     ? 'bg-blue-100 text-blue-800'
                     : 'bg-yellow-100 text-yellow-800'
                 }`}>
-                  {statusMessage.type === 'success' ? (
+                  {ingestionStatus.isProcessing === false && ingestionStatus.statusMessage.includes('succès') ? (
                     <CheckCircle className="w-5 h-5" />
                   ) : (
                     <AlertCircle className="w-5 h-5" />
                   )}
-                  <span>{statusMessage.text}</span>
+                  <span>{ingestionStatus.statusMessage}</span>
                 </div>
               )}
             </div>

@@ -8,7 +8,7 @@ import { SearchBar } from '@/components/knowledge/SearchBar'
 import { HoverEffect } from '@/components/ui/hover-effect'
 import { Button } from '@/components/ui/Button'
 import { Plus, Download, Settings, File, Database, CheckCircle } from 'lucide-react'
-import { KnowledgeDocument } from '@/types'
+import { useKnowledgeAPI } from '@/hooks/useKnowledgeAPI'
 
 // Données de démonstration
 const sampleDocuments: KnowledgeDocument[] = [
@@ -110,24 +110,19 @@ const sampleDocuments: KnowledgeDocument[] = [
 ]
 
 export default function KnowledgePage() {
-  const [documents] = useState<KnowledgeDocument[]>(sampleDocuments)
-  const [searchTerm, setSearchTerm] = useState('')
   const [showFilters, setShowFilters] = useState(false)
   const [hasActiveFilters, setHasActiveFilters] = useState(false)
-
-  // Filtrage des documents
-  const filteredDocuments = useMemo(() => {
-    if (!searchTerm) return documents
-    
-    return documents.filter(doc =>
-      doc.originalName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      doc.metadata?.tags?.some(tag => 
-        tag.toLowerCase().includes(searchTerm.toLowerCase())
-      ) ||
-      doc.metadata?.category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      doc.metadata?.department?.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  }, [documents, searchTerm])
+  
+  const {
+    documents: filteredDocuments,
+    allDocuments: documents,
+    isLoading,
+    searchTerm,
+    setSearchTerm,
+    toggleDocumentStatus,
+    deleteDocument,
+    viewDocumentDetails
+  } = useKnowledgeAPI()
 
   // Calcul des statistiques
   const stats = useMemo(() => {
@@ -144,19 +139,16 @@ export default function KnowledgePage() {
     }
   }, [documents])
 
-  const handleToggleActive = (id: string) => {
-    // Simulation de la logique de basculement
-    console.log('Toggle active for document:', id)
+  const handleToggleActive = async (id: string) => {
+    await toggleDocumentStatus(id)
   }
 
-  const handleDelete = (id: string) => {
-    // Simulation de la suppression
-    console.log('Delete document:', id)
+  const handleDelete = async (id: string) => {
+    await deleteDocument(id)
   }
 
   const handleViewDetails = (id: string) => {
-    // Simulation de l'affichage des détails
-    console.log('View details for document:', id)
+    viewDocumentDetails(id)
   }
 
   const handleExport = () => {
@@ -285,24 +277,33 @@ export default function KnowledgePage() {
           )}
 
           {/* Liste des documents */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-            {filteredDocuments.map((document) => (
-              <XCard
-                key={document.id}
-                documentName={document.originalName}
-                documentType="PDF"
-                documentSize={`${(document.size / 1024 / 1024).toFixed(1)} MB`}
-                uploadDate={document.uploadDate.toLocaleDateString('fr-FR')}
-                status={document.status}
-                chunksCount={document.chunksCount}
-                sourceCount={document.sourceCount}
-                tags={document.metadata?.tags}
-                onToggleActive={() => handleToggleActive(document.id)}
-                onDelete={() => handleDelete(document.id)}
-                onViewDetails={() => handleViewDetails(document.id)}
-              />
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="flex items-center gap-3">
+                <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin" />
+                <span className="text-gray-600">Chargement des documents...</span>
+              </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              {filteredDocuments.map((document) => (
+                <XCard
+                  key={document.id}
+                  documentName={document.originalName}
+                  documentType="PDF"
+                  documentSize={`${(document.size / 1024 / 1024).toFixed(1)} MB`}
+                  uploadDate={document.uploadDate.toLocaleDateString('fr-FR')}
+                  status={document.status}
+                  chunksCount={document.chunksCount}
+                  sourceCount={document.sourceCount}
+                  tags={document.metadata?.tags}
+                  onToggleActive={() => handleToggleActive(document.id)}
+                  onDelete={() => handleDelete(document.id)}
+                  onViewDetails={() => handleViewDetails(document.id)}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Message si aucun résultat */}
           {filteredDocuments.length === 0 && (
