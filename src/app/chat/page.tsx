@@ -149,35 +149,35 @@ export default function ChatPage() {
         
         <div 
           ref={chatContainerRef}
-          className="flex-1 overflow-y-auto p-12 space-y-6"
+          className="flex-1 overflow-y-auto p-8 space-y-6 flex flex-col items-center"
         >
-          {/* Message de bienvenue */}
-          <div className="text-center bg-white rounded-2xl p-12 shadow-md border-2 border-gray-100 mx-auto max-w-4xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-            <div className="text-6xl text-blue-600 mb-6 transition-transform duration-300 hover:scale-110 hover:rotate-6">
-              <Bot />
-            </div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          {/* Message de bienvenue simple et stylé */}
+          <div className="text-center w-full max-w-5xl">
+            <h2 className="text-6xl font-bold text-blue-600 mb-6 tracking-tight">
               Bienvenue sur Docu-Mentor
             </h2>
-            <p className="text-gray-600 text-lg leading-relaxed max-w-2xl mx-auto">
-              Posez vos questions sur la documentation interne. L&apos;IA analysera le contenu de vos documents ingérés et vous fournira des réponses précises avec les sources contextuelles.
+            <div className="h-2 w-40 bg-yellow-400 rounded-full mx-auto mb-8"></div>
+            <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
+              Posez vos questions sur la documentation interne et obtenez des réponses précises avec sources.
             </p>
           </div>
 
           {/* Messages */}
-          {messages.map((message) => (
-            <Message key={message.id} message={message} />
-          ))}
+          <div className="w-full max-w-4xl space-y-6">
+            {messages.map((message) => (
+              <Message key={message.id} message={message} />
+            ))}
+          </div>
 
           {/* Message de chargement */}
           {isLoading && (
-            <div className="max-w-[70%] p-6 rounded-2xl shadow-lg bg-white border-2 border-gray-200 flex items-center gap-4">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+            <div className="max-w-[70%] p-6 rounded-2xl shadow-lg bg-white/80 backdrop-blur-sm border border-white/20 flex items-center gap-4 mx-auto">
+              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
                 <Bot className="w-4 h-4 text-white" />
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin" />
-                <span className="text-gray-600 italic">
+                <span className="text-gray-600">
                   L&apos;IA analyse vos documents et prépare une réponse contextuelle...
                 </span>
               </div>

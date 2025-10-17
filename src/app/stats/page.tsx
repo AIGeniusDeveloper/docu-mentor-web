@@ -3,7 +3,7 @@
 import React from 'react'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Header } from '@/components/layout/Header'
-import { KPICard } from '@/components/stats/KPICard'
+import { HoverEffect } from '@/components/ui/hover-effect'
 import { UsageChart } from '@/components/stats/UsageChart'
 import { SourceUsageChart } from '@/components/stats/SourceUsageChart'
 import { 
@@ -105,45 +105,37 @@ export default function StatsPage() {
           }
         />
         
-        <div className="flex-1 overflow-y-auto p-12">
+        <div className="flex-1 overflow-y-auto p-6">
           {/* KPI Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <KPICard
-              title="Volume de Connaissance"
-              value={`${dashboardStats.totalDocuments} Documents`}
-              icon={CloudUpload}
-              color="blue"
-              subtitle="Documents actifs dans le Vector Store"
-              trend={{ value: 12, isPositive: true }}
-            />
-            
-            <KPICard
-              title="Efficacité RAG"
-              value={`${dashboardStats.ragEfficiency}% de Pertinence`}
-              icon={CheckCircle}
-              color="green"
-              subtitle="Requêtes avec sources trouvées"
-              trend={{ value: 5, isPositive: true }}
-            />
-            
-            <KPICard
-              title="Taux d'Hallucination"
-              value={`${dashboardStats.hallucinationRate}% de Lacune`}
-              icon={AlertTriangle}
-              color="yellow"
-              subtitle="Réponses sans source"
-              trend={{ value: 3, isPositive: false }}
-            />
-            
-            <KPICard
-              title="Requêtes Totales"
-              value={`${dashboardStats.totalQueries.toLocaleString()} Requêtes`}
-              icon={MessageSquare}
-              color="gray"
-              subtitle="Depuis le lancement"
-              trend={{ value: 18, isPositive: true }}
-            />
-          </div>
+          <HoverEffect 
+            items={[
+              {
+                title: "Volume de Connaissance",
+                description: "Documents actifs dans le Vector Store",
+                value: `${dashboardStats.totalDocuments} Documents`,
+                icon: <CloudUpload className="w-8 h-8 text-blue-600" />
+              },
+              {
+                title: "Efficacité RAG",
+                description: "Requêtes avec sources trouvées",
+                value: `${dashboardStats.ragEfficiency}% de Pertinence`,
+                icon: <CheckCircle className="w-8 h-8 text-yellow-600" />
+              },
+              {
+                title: "Taux d'Hallucination",
+                description: "Réponses sans source",
+                value: `${dashboardStats.hallucinationRate}% de Lacune`,
+                icon: <AlertTriangle className="w-8 h-8 text-yellow-600" />
+              },
+              {
+                title: "Requêtes Totales",
+                description: "Depuis le lancement",
+                value: `${dashboardStats.totalQueries.toLocaleString()} Requêtes`,
+                icon: <MessageSquare className="w-8 h-8 text-blue-600" />
+              }
+            ]}
+            className="mb-6"
+          />
 
           {/* Graphiques */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -163,22 +155,22 @@ export default function StatsPage() {
           {/* Insights et Recommandations */}
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Insights */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border-2 border-gray-100">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
               <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
                 <TrendingUp className="w-5 h-5 text-blue-600" />
                 Insights Clés
               </h3>
               <div className="space-y-4">
-                <div className="p-4 bg-green-50 rounded-xl border-l-4 border-green-500">
-                  <div className="text-sm font-semibold text-green-800 mb-1">
+                <div className="p-4 bg-yellow-50 rounded-xl">
+                  <div className="text-sm font-semibold text-yellow-800 mb-1">
                     Performance Excellente
                   </div>
-                  <div className="text-sm text-green-700">
+                  <div className="text-sm text-yellow-700">
                     92% des requêtes trouvent des sources pertinentes, démontrant la robustesse du système.
                   </div>
                 </div>
                 
-                <div className="p-4 bg-blue-50 rounded-xl border-l-4 border-blue-500">
+                <div className="p-4 bg-blue-50 rounded-xl">
                   <div className="text-sm font-semibold text-blue-800 mb-1">
                     Adoption Croissante
                   </div>
@@ -187,7 +179,7 @@ export default function StatsPage() {
                   </div>
                 </div>
                 
-                <div className="p-4 bg-yellow-50 rounded-xl border-l-4 border-yellow-500">
+                <div className="p-4 bg-yellow-50 rounded-xl">
                   <div className="text-sm font-semibold text-yellow-800 mb-1">
                     Source Dominante
                   </div>
@@ -199,35 +191,35 @@ export default function StatsPage() {
             </div>
 
             {/* Recommandations */}
-            <div className="bg-white rounded-2xl p-6 shadow-lg border-2 border-gray-100">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
               <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <AlertTriangle className="w-5 h-5 text-orange-600" />
+                <AlertTriangle className="w-5 h-5 text-yellow-600" />
                 Recommandations
               </h3>
               <div className="space-y-4">
-                <div className="p-4 bg-orange-50 rounded-xl border-l-4 border-orange-500">
-                  <div className="text-sm font-semibold text-orange-800 mb-1">
+                <div className="p-4 bg-yellow-50 rounded-xl">
+                  <div className="text-sm font-semibold text-yellow-800 mb-1">
                     Enrichir la Base
                   </div>
-                  <div className="text-sm text-orange-700">
+                  <div className="text-sm text-yellow-700">
                     Ajouter des documents complémentaires pour réduire le taux d&apos;hallucination de 8%.
                   </div>
                 </div>
                 
-                <div className="p-4 bg-purple-50 rounded-xl border-l-4 border-purple-500">
-                  <div className="text-sm font-semibold text-purple-800 mb-1">
+                <div className="p-4 bg-blue-50 rounded-xl">
+                  <div className="text-sm font-semibold text-blue-800 mb-1">
                     Diversifier les Sources
                   </div>
-                  <div className="text-sm text-purple-700">
+                  <div className="text-sm text-blue-700">
                     Équilibrer l&apos;utilisation des sources pour éviter la sur-dépendance au Code Minier.
                   </div>
                 </div>
                 
-                <div className="p-4 bg-indigo-50 rounded-xl border-l-4 border-indigo-500">
-                  <div className="text-sm font-semibold text-indigo-800 mb-1">
+                <div className="p-4 bg-blue-50 rounded-xl">
+                  <div className="text-sm font-semibold text-blue-800 mb-1">
                     Surveillance Continue
                   </div>
-                  <div className="text-sm text-indigo-700">
+                  <div className="text-sm text-blue-700">
                     Maintenir la qualité des réponses avec un monitoring régulier des performances.
                   </div>
                 </div>

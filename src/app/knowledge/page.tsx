@@ -3,11 +3,11 @@
 import React, { useState, useMemo } from 'react'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Header } from '@/components/layout/Header'
-import { DocumentCard } from '@/components/knowledge/DocumentCard'
+import { XCard } from '@/components/ui/x-gradient-card'
 import { SearchBar } from '@/components/knowledge/SearchBar'
-import { KnowledgeStats } from '@/components/knowledge/KnowledgeStats'
+import { HoverEffect } from '@/components/ui/hover-effect'
 import { Button } from '@/components/ui/Button'
-import { Plus, Download, Settings } from 'lucide-react'
+import { Plus, Download, Settings, File, Database, CheckCircle } from 'lucide-react'
 import { KnowledgeDocument } from '@/types'
 
 // Données de démonstration
@@ -190,13 +190,36 @@ export default function KnowledgePage() {
           }
         />
         
-        <div className="flex-1 overflow-y-auto p-12">
+        <div className="flex-1 overflow-y-auto p-6">
           {/* Statistiques */}
-          <KnowledgeStats
-            totalDocuments={stats.totalDocuments}
-            activeDocuments={stats.activeDocuments}
-            totalChunks={stats.totalChunks}
-            totalSize={stats.totalSize}
+          <HoverEffect 
+            items={[
+              {
+                title: "Documents Totaux",
+                description: "Tous les documents dans la base",
+                value: stats.totalDocuments.toLocaleString(),
+                icon: <File className="w-8 h-8 text-blue-600" />
+              },
+              {
+                title: "Documents Actifs",
+                description: "Documents disponibles pour l'IA",
+                value: stats.activeDocuments.toLocaleString(),
+                icon: <CheckCircle className="w-8 h-8 text-yellow-600" />
+              },
+              {
+                title: "Chunks Créés",
+                description: "Segments de texte indexés",
+                value: stats.totalChunks.toLocaleString(),
+                icon: <Database className="w-8 h-8 text-blue-600" />
+              },
+              {
+                title: "Taille Totale",
+                description: "Espace de stockage utilisé",
+                value: stats.totalSize,
+                icon: <File className="w-8 h-8 text-yellow-600" />
+              }
+            ]}
+            className="mb-6"
           />
 
           {/* Barre de recherche */}
@@ -208,23 +231,75 @@ export default function KnowledgePage() {
             resultsCount={filteredDocuments.length}
           />
 
-          {/* Filtres (à implémenter) */}
+          {/* Filtres avancés */}
           {showFilters && (
-            <div className="bg-white rounded-2xl p-6 shadow-lg border-2 border-gray-100 mb-8">
-              <h3 className="text-lg font-bold text-gray-800 mb-4">Filtres avancés</h3>
-              <p className="text-gray-600">Fonctionnalité de filtrage à venir...</p>
+            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-200 mb-6">
+              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z" />
+                </svg>
+                Filtres avancés
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">Statut</label>
+                  <select className="w-full p-3 border border-gray-200 rounded-lg bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    <option value="">Tous les statuts</option>
+                    <option value="active">Actif</option>
+                    <option value="inactive">Inactif</option>
+                    <option value="processing">En traitement</option>
+                  </select>
+                </div>
+                
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">Catégorie</label>
+                  <select className="w-full p-3 border border-gray-200 rounded-lg bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    <option value="">Toutes les catégories</option>
+                    <option value="Réglementation">Réglementation</option>
+                    <option value="Législation">Législation</option>
+                    <option value="Procédures">Procédures</option>
+                  </select>
+                </div>
+                
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">Taille</label>
+                  <select className="w-full p-3 border border-gray-200 rounded-lg bg-white text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    <option value="">Toutes les tailles</option>
+                    <option value="small">&lt; 1MB</option>
+                    <option value="medium">1MB - 5MB</option>
+                    <option value="large">&gt; 5MB</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div className="flex gap-3 mt-4">
+                <Button className="bg-blue-600 hover:bg-blue-700">
+                  Appliquer les filtres
+                </Button>
+                <Button variant="outline" onClick={() => setShowFilters(false)}>
+                  Fermer
+                </Button>
+              </div>
             </div>
           )}
 
           {/* Liste des documents */}
           <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
             {filteredDocuments.map((document) => (
-              <DocumentCard
+              <XCard
                 key={document.id}
-                document={document}
-                onToggleActive={handleToggleActive}
-                onDelete={handleDelete}
-                onViewDetails={handleViewDetails}
+                documentName={document.originalName}
+                documentType="PDF"
+                documentSize={`${(document.size / 1024 / 1024).toFixed(1)} MB`}
+                uploadDate={document.uploadDate.toLocaleDateString('fr-FR')}
+                status={document.status}
+                chunksCount={document.chunksCount}
+                sourceCount={document.sourceCount}
+                tags={document.metadata?.tags}
+                onToggleActive={() => handleToggleActive(document.id)}
+                onDelete={() => handleDelete(document.id)}
+                onViewDetails={() => handleViewDetails(document.id)}
               />
             ))}
           </div>

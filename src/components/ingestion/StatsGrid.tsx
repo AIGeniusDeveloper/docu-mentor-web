@@ -12,17 +12,20 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
     {
       number: stats.totalDocuments.toString(),
       label: 'Documents',
-      color: 'from-blue-600 to-blue-700'
+      color: 'blue-600',
+      bgColor: 'bg-blue-50'
     },
     {
       number: stats.totalSize,
       label: 'Stockage',
-      color: 'from-green-600 to-green-700'
+      color: 'yellow-600',
+      bgColor: 'bg-yellow-50'
     },
     {
       number: `${stats.successRate}%`,
       label: 'Succès',
-      color: 'from-purple-600 to-purple-700'
+      color: 'blue-600',
+      bgColor: 'bg-blue-50'
     }
   ]
 
@@ -31,15 +34,12 @@ export const StatsGrid: React.FC<StatsGridProps> = ({ stats }) => {
       {statCards.map((stat, index) => (
         <div
           key={index}
-          className="bg-white p-8 rounded-2xl shadow-md border-2 border-gray-100 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:scale-105 relative overflow-hidden"
+          className={`${stat.bgColor} p-6 rounded-xl shadow-sm border border-gray-200 text-center transition-all duration-300 hover:shadow-md`}
         >
-          {/* Gradient border top */}
-          <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${stat.color} transform scale-x-0 transition-transform duration-300 hover:scale-x-100`} />
-          
-          <div className={`text-4xl font-bold bg-gradient-to-br ${stat.color} bg-clip-text text-transparent mb-2 transition-transform duration-300 hover:scale-110`}>
+          <div className={`text-3xl font-bold text-${stat.color} mb-2`}>
             {stat.number}
           </div>
-          <div className="text-gray-600 font-medium">
+          <div className="text-gray-600 font-medium text-sm">
             {stat.label}
           </div>
         </div>

@@ -38,7 +38,7 @@ export const Sidebar: React.FC = () => {
         <div className="text-white text-xl font-bold mb-2 tracking-tight">
           Docu-Mentor
         </div>
-        <div className="text-gray-400 text-sm italic">
+        <div className="text-gray-400 text-sm">
           Assistant IA Documentaire
         </div>
       </div>
@@ -65,7 +65,7 @@ export const Sidebar: React.FC = () => {
                 )}
               >
                 {isActive && (
-                  <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-r-full shadow-lg" />
+                  <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-8 bg-yellow-400 rounded-r-full shadow-lg" />
                 )}
                 <Icon className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
                 <span className="font-medium">{item.label}</span>

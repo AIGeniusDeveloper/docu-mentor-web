@@ -21,7 +21,6 @@ export const KnowledgeStats: React.FC<KnowledgeStatsProps> = ({
       title: 'Documents Totaux',
       value: totalDocuments.toLocaleString(),
       icon: File,
-      color: 'blue',
       bgColor: 'bg-blue-50',
       iconColor: 'text-blue-600',
       valueColor: 'text-blue-900'
@@ -30,28 +29,25 @@ export const KnowledgeStats: React.FC<KnowledgeStatsProps> = ({
       title: 'Documents Actifs',
       value: activeDocuments.toLocaleString(),
       icon: CheckCircle,
-      color: 'green',
-      bgColor: 'bg-green-50',
-      iconColor: 'text-green-600',
-      valueColor: 'text-green-900'
+      bgColor: 'bg-yellow-50',
+      iconColor: 'text-yellow-600',
+      valueColor: 'text-yellow-900'
     },
     {
       title: 'Chunks Créés',
       value: totalChunks.toLocaleString(),
       icon: Database,
-      color: 'purple',
-      bgColor: 'bg-purple-50',
-      iconColor: 'text-purple-600',
-      valueColor: 'text-purple-900'
+      bgColor: 'bg-blue-50',
+      iconColor: 'text-blue-600',
+      valueColor: 'text-blue-900'
     },
     {
       title: 'Taille Totale',
       value: totalSize,
       icon: File,
-      color: 'orange',
-      bgColor: 'bg-orange-50',
-      iconColor: 'text-orange-600',
-      valueColor: 'text-orange-900'
+      bgColor: 'bg-yellow-50',
+      iconColor: 'text-yellow-600',
+      valueColor: 'text-yellow-900'
     }
   ]
 
@@ -62,10 +58,10 @@ export const KnowledgeStats: React.FC<KnowledgeStatsProps> = ({
         return (
           <div
             key={index}
-            className={`${stat.bgColor} rounded-2xl p-6 shadow-lg border-2 border-transparent hover:shadow-xl hover:-translate-y-1 transition-all duration-300`}
+            className={`${stat.bgColor} rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300`}
           >
             <div className="flex items-center justify-between mb-4">
-              <div className={`p-3 rounded-xl ${stat.bgColor.replace('50', '100')}`}>
+              <div className={`p-3 rounded-lg ${stat.bgColor.replace('50', '100')}`}>
                 <Icon className={`w-6 h-6 ${stat.iconColor}`} />
               </div>
               <div className="text-right">
@@ -82,7 +78,7 @@ export const KnowledgeStats: React.FC<KnowledgeStatsProps> = ({
             {stat.title === 'Documents Actifs' && totalDocuments > 0 && (
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div
-                  className="bg-green-600 h-2 rounded-full transition-all duration-500"
+                  className="bg-yellow-500 h-2 rounded-full transition-all duration-500"
                   style={{ width: `${(activeDocuments / totalDocuments) * 100}%` }}
                 />
               </div>

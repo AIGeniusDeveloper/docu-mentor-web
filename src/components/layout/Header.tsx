@@ -12,10 +12,10 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ title, subtitle, actions }) => {
   return (
-    <header className="bg-white px-12 py-8 border-b-2 border-gray-200 flex justify-between items-center shadow-sm">
+    <header className="bg-white px-6 py-4 border-b border-gray-200 flex justify-between items-center">
       <div className="flex-1">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">{title}</h1>
-        <p className="text-gray-600 text-lg">{subtitle}</p>
+        <h1 className="text-xl font-semibold text-blue-600 mb-0.5">{title}</h1>
+        <p className="text-gray-600 text-sm">{subtitle}</p>
       </div>
       
       <div className="flex gap-4 items-center">

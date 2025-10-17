@@ -77,10 +77,10 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       {/* Drop Zone */}
       <div
         className={cn(
-          'border-3 border-dashed rounded-2xl p-16 text-center cursor-pointer transition-all duration-300 relative overflow-hidden',
+          'border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all duration-300 relative',
           isDragOver
-            ? 'border-yellow-400 bg-yellow-50 scale-105 shadow-2xl'
-            : 'border-gray-300 bg-gray-50 hover:border-blue-500 hover:bg-blue-50 hover:-translate-y-1 hover:shadow-lg'
+            ? 'border-yellow-400 bg-yellow-50'
+            : 'border-gray-300 bg-gray-50 hover:border-blue-500 hover:bg-blue-50'
         )}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -89,8 +89,8 @@ export const FileUpload: React.FC<FileUploadProps> = ({
       >
         <div className="relative z-10">
           <div className={cn(
-            'text-6xl mb-8 transition-all duration-300',
-            isDragOver ? 'scale-110 -rotate-6 text-yellow-500' : 'text-blue-600 hover:scale-110 hover:-rotate-6'
+            'text-5xl mb-6 transition-all duration-300',
+            isDragOver ? 'text-yellow-500' : 'text-blue-600'
           )}>
             <File />
           </div>
@@ -101,9 +101,6 @@ export const FileUpload: React.FC<FileUploadProps> = ({
             ou cliquez pour sélectionner (maximum {maxFiles} fichiers, {maxSize}MB chacun)
           </div>
         </div>
-        
-        {/* Background gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-yellow-50/50 opacity-0 transition-opacity duration-300 hover:opacity-100" />
       </div>
 
       <input
@@ -121,11 +118,11 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           {selectedFiles.map((file, index) => (
             <div
               key={index}
-              className="flex items-center justify-between p-6 bg-gray-50 rounded-2xl border-l-6 border-blue-500 shadow-md hover:shadow-lg hover:-translate-y-1 hover:border-l-yellow-400 transition-all duration-300"
+              className="flex items-center justify-between p-4 bg-gray-50 rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
             >
               <div className="flex items-center gap-6 flex-1">
-                <div className="text-red-500 text-3xl transition-transform duration-300 hover:scale-110 hover:rotate-6">
-                  📄
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <File className="w-5 h-5 text-blue-600" />
                 </div>
                 <div className="flex-1">
                   <div className="font-bold text-gray-800 text-lg mb-1">
@@ -138,9 +135,9 @@ export const FileUpload: React.FC<FileUploadProps> = ({
               </div>
               <button
                 onClick={() => onRemoveFile(index)}
-                className="p-3 text-red-500 hover:bg-red-50 rounded-xl transition-all duration-300 hover:scale-130 hover:rotate-90"
+                className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-all duration-300"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
           ))}

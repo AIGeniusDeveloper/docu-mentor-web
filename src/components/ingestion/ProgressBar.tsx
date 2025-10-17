@@ -19,11 +19,11 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   return (
     <div className={cn('w-full h-4 bg-gray-200 rounded-xl overflow-hidden shadow-inner', className)}>
       <div
-        className="h-full bg-gradient-to-r from-blue-600 via-blue-700 to-yellow-400 transition-all duration-300 ease-out rounded-xl shadow-lg relative"
+        className="h-full bg-blue-600 transition-all duration-300 ease-out rounded-xl relative"
         style={{ width: `${Math.min(progress, 100)}%` }}
       >
         {/* Shimmer effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse" />
+        <div className="absolute inset-0 bg-white/20 animate-pulse" />
       </div>
     </div>
   )

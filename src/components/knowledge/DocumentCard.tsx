@@ -22,20 +22,20 @@ export const DocumentCard: React.FC<DocumentCardProps> = ({
   const getStatusColor = (status: KnowledgeDocument['status']) => {
     switch (status) {
       case 'active':
-        return 'bg-green-100 text-green-800 border-green-200'
+        return 'bg-blue-100 text-blue-800 border-blue-200'
       case 'inactive':
         return 'bg-gray-100 text-gray-800 border-gray-200'
       case 'processing':
         return 'bg-yellow-100 text-yellow-800 border-yellow-200'
       case 'error':
-        return 'bg-red-100 text-red-800 border-red-200'
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200'
       default:
         return 'bg-gray-100 text-gray-800 border-gray-200'
     }
   }
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-lg border-2 border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300">
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
@@ -68,7 +68,7 @@ export const DocumentCard: React.FC<DocumentCardProps> = ({
             className={cn(
               'p-2 rounded-lg transition-all duration-300',
               document.isActive
-                ? 'bg-green-100 text-green-600 hover:bg-green-200'
+                ? 'bg-blue-100 text-blue-600 hover:bg-blue-200'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             )}
             title={document.isActive ? 'Désactiver' : 'Activer'}
@@ -78,7 +78,7 @@ export const DocumentCard: React.FC<DocumentCardProps> = ({
           
           <button
             onClick={() => onDelete(document.id)}
-            className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-all duration-300"
+            className="p-2 bg-yellow-100 text-yellow-600 rounded-lg hover:bg-yellow-200 transition-all duration-300"
             title="Supprimer"
           >
             <Trash2 className="w-4 h-4" />
@@ -110,12 +110,12 @@ export const DocumentCard: React.FC<DocumentCardProps> = ({
           </div>
         </div>
         
-        <div className="bg-green-50 rounded-lg p-3">
+        <div className="bg-yellow-50 rounded-lg p-3">
           <div className="flex items-center gap-2 mb-1">
-            <File className="w-4 h-4 text-green-600" />
-            <span className="text-sm font-semibold text-green-800">Sources</span>
+            <File className="w-4 h-4 text-yellow-600" />
+            <span className="text-sm font-semibold text-yellow-800">Sources</span>
           </div>
-          <div className="text-xl font-bold text-green-900">
+          <div className="text-xl font-bold text-yellow-900">
             {document.sourceCount.toLocaleString()}
           </div>
         </div>

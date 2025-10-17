@@ -12,19 +12,19 @@ export const HistoryTable: React.FC<HistoryTableProps> = ({ documents }) => {
   const getStatusBadge = (status: Document['status']) => {
     const statusConfig = {
       success: {
-        className: 'bg-gradient-to-r from-green-100 to-green-200 text-green-800',
+        className: 'bg-blue-100 text-blue-800',
         label: 'Succès'
       },
       error: {
-        className: 'bg-gradient-to-r from-red-100 to-red-200 text-red-800',
+        className: 'bg-yellow-100 text-yellow-800',
         label: 'Échec'
       },
       processing: {
-        className: 'bg-gradient-to-r from-yellow-100 to-yellow-200 text-yellow-800',
+        className: 'bg-yellow-100 text-yellow-800',
         label: 'En cours'
       },
       pending: {
-        className: 'bg-gradient-to-r from-gray-100 to-gray-200 text-gray-800',
+        className: 'bg-gray-100 text-gray-800',
         label: 'En attente'
       }
     }
@@ -39,10 +39,10 @@ export const HistoryTable: React.FC<HistoryTableProps> = ({ documents }) => {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl shadow-md">
+    <div className="overflow-hidden rounded-xl shadow-sm">
       <table className="w-full border-collapse">
         <thead>
-          <tr className="bg-gradient-to-r from-gray-50 to-gray-100">
+          <tr className="bg-gray-50">
             <th className="px-6 py-4 text-left font-bold text-gray-800 text-base">Fichier</th>
             <th className="px-6 py-4 text-left font-bold text-gray-800 text-base">Statut</th>
             <th className="px-6 py-4 text-left font-bold text-gray-800 text-base">Date</th>

@@ -145,10 +145,10 @@ export default function IngestionPage() {
             {/* Section Upload */}
             <div className="bg-white rounded-2xl p-10 shadow-lg border-2 border-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
               <div className="flex items-center gap-4 mb-8">
-                <div className="text-blue-600 text-2xl transition-transform duration-300 hover:scale-110 hover:rotate-6">
-                  📤
+                <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
+                  <Rocket className="w-6 h-6 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800">
+                <h2 className="text-2xl font-bold text-blue-600">
                   Sélection de Documents
                 </h2>
               </div>
@@ -181,8 +181,8 @@ export default function IngestionPage() {
               {statusMessage.visible && (
                 <div className={`mt-6 p-4 rounded-xl flex items-center gap-3 font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-md ${
                   statusMessage.type === 'success'
-                    ? 'bg-gradient-to-r from-green-100 to-green-200 text-green-800 border-2 border-green-300'
-                    : 'bg-gradient-to-r from-red-100 to-red-200 text-red-800 border-2 border-red-300'
+                    ? 'bg-blue-100 text-blue-800'
+                    : 'bg-yellow-100 text-yellow-800'
                 }`}>
                   {statusMessage.type === 'success' ? (
                     <CheckCircle className="w-5 h-5" />
@@ -197,10 +197,10 @@ export default function IngestionPage() {
             {/* Section Historique */}
             <div className="bg-white rounded-2xl p-10 shadow-lg border-2 border-gray-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
               <div className="flex items-center gap-4 mb-8">
-                <div className="text-blue-600 text-2xl transition-transform duration-300 hover:scale-110 hover:rotate-6">
-                  📋
+                <div className="w-12 h-12 bg-yellow-400 rounded-xl flex items-center justify-center">
+                  <CheckCircle className="w-6 h-6 text-gray-800" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800">
+                <h2 className="text-2xl font-bold text-yellow-600">
                   Historique des Opérations
                 </h2>
               </div>

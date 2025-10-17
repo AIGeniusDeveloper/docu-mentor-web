@@ -32,10 +32,10 @@ export const KPICard: React.FC<KPICardProps> = ({
       accent: 'bg-blue-600'
     },
     green: {
-      bg: 'bg-green-50',
-      icon: 'text-green-600',
-      value: 'text-green-900',
-      accent: 'bg-green-600'
+      bg: 'bg-yellow-50',
+      icon: 'text-yellow-600',
+      value: 'text-yellow-900',
+      accent: 'bg-yellow-600'
     },
     yellow: {
       bg: 'bg-yellow-50',
@@ -44,10 +44,10 @@ export const KPICard: React.FC<KPICardProps> = ({
       accent: 'bg-yellow-600'
     },
     gray: {
-      bg: 'bg-gray-50',
-      icon: 'text-gray-600',
-      value: 'text-gray-900',
-      accent: 'bg-gray-600'
+      bg: 'bg-blue-50',
+      icon: 'text-blue-600',
+      value: 'text-blue-900',
+      accent: 'bg-blue-600'
     }
   }
 
@@ -55,7 +55,7 @@ export const KPICard: React.FC<KPICardProps> = ({
 
   return (
     <div className={cn(
-      'bg-white rounded-2xl p-6 shadow-lg border-2 border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden',
+      'bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300 relative overflow-hidden',
       colors.bg
     )}>
       {/* Accent bar */}

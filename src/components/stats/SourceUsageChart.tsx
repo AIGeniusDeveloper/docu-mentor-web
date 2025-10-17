@@ -10,15 +10,15 @@ interface SourceUsageChartProps {
 
 export const SourceUsageChart: React.FC<SourceUsageChartProps> = ({ data, title }) => {
   const colors = [
-    'bg-blue-500',
-    'bg-green-500', 
+    'bg-blue-600',
     'bg-yellow-500',
-    'bg-purple-500',
-    'bg-red-500'
+    'bg-blue-500',
+    'bg-yellow-600',
+    'bg-blue-700'
   ]
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-lg border-2 border-gray-100">
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
       <h3 className="text-lg font-bold text-gray-800 mb-6">{title}</h3>
       
       <div className="space-y-4">
