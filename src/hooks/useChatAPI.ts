@@ -4,13 +4,14 @@ import { ChatService, ChatResponse } from '@/services/api'
 export interface Message {
   id: string
   content: string
-  isUser: boolean
+  sender: 'user' | 'ai'
   timestamp: Date
   sources?: Array<{
     id: string
     filename: string
     page?: number
     section?: string
+    type: 'pdf' | 'doc' | 'txt'
   }>
 }
 
@@ -25,7 +26,7 @@ export const useChatAPI = () => {
     const userMessage: Message = {
       id: `user-${Date.now()}`,
       content: content.trim(),
-      isUser: true,
+      sender: 'user',
       timestamp: new Date()
     }
 
@@ -43,7 +44,8 @@ export const useChatAPI = () => {
           id: `source-${index}`,
           filename: filename.replace('.pdf', ''),
           page: Math.floor(Math.random() * 50) + 1, // Simulation d'un numéro de page
-          section: `Section ${Math.floor(Math.random() * 10) + 1}` // Simulation d'une section
+          section: `Section ${Math.floor(Math.random() * 10) + 1}`, // Simulation d'une section
+          type: 'pdf' as const
         }
       })
 
@@ -51,7 +53,7 @@ export const useChatAPI = () => {
       const aiMessage: Message = {
         id: `ai-${Date.now()}`,
         content: response.answer,
-        isUser: false,
+        sender: 'ai',
         timestamp: new Date(),
         sources: sources.length > 0 ? sources : undefined
       }
@@ -64,7 +66,7 @@ export const useChatAPI = () => {
       const errorMessage: Message = {
         id: `error-${Date.now()}`,
         content: "Une erreur est survenue lors de la communication avec l'IA. Veuillez réessayer.",
-        isUser: false,
+        sender: 'ai',
         timestamp: new Date()
       }
 

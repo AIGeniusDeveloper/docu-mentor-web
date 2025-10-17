@@ -30,29 +30,29 @@ export const Sidebar: React.FC = () => {
   // Icône de collapse/expand personnalisée comme sur l'image
   const CollapseIcon = () => (
     <svg
-      width="24"
-      height="14"
-      viewBox="0 0 24 14"
+      width="32"
+      height="20"
+      viewBox="0 0 32 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className="text-gray-400 hover:text-white transition-colors duration-300"
     >
       <rect
-        x="1"
-        y="1"
-        width="22"
-        height="12"
-        rx="6"
+        x="2"
+        y="2"
+        width="28"
+        height="16"
+        rx="8"
         stroke="currentColor"
         strokeWidth="2"
         fill="none"
       />
       <rect
-        x="4"
-        y="4"
-        width="3"
-        height="6"
-        rx="1.5"
+        x="6"
+        y="6"
+        width="4"
+        height="8"
+        rx="2"
         fill="currentColor"
       />
     </svg>
@@ -72,22 +72,31 @@ export const Sidebar: React.FC = () => {
         "mb-8 transition-all duration-300",
         isCollapsed ? "text-center" : "text-center"
       )}>
-        <div className="flex items-center justify-between mb-4">
-          <div className={cn(
-            "bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-2xl flex items-center justify-center text-gray-800 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300",
-            isCollapsed ? "w-12 h-12" : "w-16 h-16"
-          )}>
+        <div className={cn(
+          "flex items-center mb-4 transition-all duration-300",
+          isCollapsed ? "justify-center" : "justify-between"
+        )}>
+          <div 
+            className={cn(
+              "bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-2xl flex items-center justify-center text-gray-800 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer",
+              isCollapsed ? "w-12 h-12" : "w-16 h-16"
+            )}
+            onClick={isCollapsed ? toggleCollapse : undefined}
+            title={isCollapsed ? "Cliquez pour étendre la sidebar" : undefined}
+          >
             <BookOpen className={isCollapsed ? "w-6 h-6" : "w-8 h-8"} />
           </div>
           
-          {/* Bouton de collapse/expand */}
-          <button
-            onClick={toggleCollapse}
-            className="p-2 rounded-lg hover:bg-gray-700 transition-colors duration-300"
-            title={isCollapsed ? "Expandir la sidebar" : "Réduire la sidebar"}
-          >
-            <CollapseIcon />
-          </button>
+          {/* Bouton de collapse/expand - seulement visible quand étendu */}
+          {!isCollapsed && (
+            <button
+              onClick={toggleCollapse}
+              className="p-2 rounded-lg hover:bg-gray-700 transition-colors duration-300"
+              title="Réduire la sidebar"
+            >
+              <CollapseIcon />
+            </button>
+          )}
         </div>
         
         {!isCollapsed && (
