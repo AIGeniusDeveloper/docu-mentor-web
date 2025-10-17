@@ -10,6 +10,15 @@ export const metadata: Metadata = {
   keywords: ['IA', 'RAG', 'Documents', 'Analyse', 'Assistant'],
   authors: [{ name: 'Docu-Mentor Team' }],
   viewport: 'width=device-width, initial-scale=1',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+  },
 }
 
 export default function RootLayout({
